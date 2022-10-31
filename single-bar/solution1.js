@@ -7,10 +7,9 @@ let mostProfit = {
   division: []
 }
 
-let cut = (barSize, smallestPeace = 1, division = [], totalBarProfit = 0) => {
-  if(smallestPeace > barSize) return
-
-  for(let peaceSize = smallestPeace; peaceSize <= barSize; peaceSize++){
+let cut = (barSize, peaceSize = 1, division = [], totalBarProfit = 0) => {
+  if(peaceSize > barSize) return
+  for(; peaceSize <= barSize; peaceSize++){
     var numPeaces = 1;
     do{
       var leftover = barSize - numPeaces * peaceSize
@@ -23,7 +22,7 @@ let cut = (barSize, smallestPeace = 1, division = [], totalBarProfit = 0) => {
         break;
       }
       if(leftover > 0){
-        cut(leftover, smallestPeace + 1, [...division, {peaceSize, numPeaces, peacesProfit}], totalBarProfit + peacesProfit)
+        cut(leftover, peaceSize + 1, [...division, {peaceSize, numPeaces, peacesProfit}], totalBarProfit + peacesProfit)
       }
 
       numPeaces++;
