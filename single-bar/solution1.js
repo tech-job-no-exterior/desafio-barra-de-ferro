@@ -2,33 +2,28 @@ const { barSize, priceMap } = require(`${__dirname}/_dataload.js`)
 
 console.time('runtime');
 
-var mostProfit = {
+let mostProfit = {
   totalBarProfit: 0,
   division: []
 }
 
-let cut = (barSize, smallestPeace = 1, division = []) => {
-  for(let peaceSize=smallestPeace; peaceSize <= barSize; peaceSize++){
+let cut = (barSize, smallestPeace = 1, division = [], totalBarProfit = 0) => {
+  if(smallestPeace > barSize) return
+
+  for(let peaceSize = smallestPeace; peaceSize <= barSize; peaceSize++){
     var numPeaces = 1;
     do{
       var leftover = barSize - numPeaces * peaceSize
-
+      var peacesProfit = numPeaces * priceMap[peaceSize - 1]
       if(leftover === 0){
-        let peacesProfit = smallestPeace * priceMap[peaceSize - 1]
-        let finalDivisionMap = [...division, {peaceSize, numPeaces, peacesProfit}]
-        var finalTotalBarProfit = 0
-        for(let divisionDetails of finalDivisionMap){
-          finalTotalBarProfit += divisionDetails.peacesProfit
-          if(finalTotalBarProfit > mostProfit.totalBarProfit){
-            mostProfit.totalBarProfit = finalTotalBarProfit
-            mostProfit.division = finalDivisionMap
-          }
+        if(totalBarProfit + peacesProfit > mostProfit.totalBarProfit){
+          mostProfit.totalBarProfit = totalBarProfit + peacesProfit
+          mostProfit.division = [...division, {peaceSize, numPeaces, peacesProfit}]
         }
-        return;
+        break;
       }
-      if(leftover > 0 && smallestPeace + 1 <= leftover){
-        let peacesProfit = smallestPeace * priceMap[peaceSize - 1]
-        cut(leftover, smallestPeace + 1, [...division, {peaceSize, numPeaces, peacesProfit}])
+      if(leftover > 0){
+        cut(leftover, smallestPeace + 1, [...division, {peaceSize, numPeaces, peacesProfit}], totalBarProfit + peacesProfit)
       }
 
       numPeaces++;
