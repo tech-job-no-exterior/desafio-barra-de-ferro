@@ -1,6 +1,6 @@
 const makePriceMap = require(`${__dirname}/../datasets/makePriceMap`)
 
-const barSize = 10000
+const barSize = 10
 
 console.time('datasets loaded')
 const priceMap = makePriceMap(barSize)
