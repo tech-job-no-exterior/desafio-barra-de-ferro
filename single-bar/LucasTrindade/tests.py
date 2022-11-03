@@ -6,7 +6,8 @@ import time
 #from solution1 import max_price #dfs 
 #from solution2 import max_price #dfs + dp 
 #from solution3 import max_price #dfs + dp v2
-from solution4 import max_price #dfs + dp v2 + divide to conquer
+#from solution4 import max_price #dfs + dp v2 + divide to conquer
+from solution5 import max_price #dfs + dp v2 + divide to conquer
 
 ####################################################################
 ### asserts 
